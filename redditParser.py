@@ -18,6 +18,7 @@ class redditSearcher():
         self.codesOfInterest = []
         self.posts = []
         self.stock = stonks()
+        self.scale = 0
         print("initialized")
     def addSub(self,subName):
         self.subsOfInterest.append(subName)
@@ -25,6 +26,7 @@ class redditSearcher():
         codesOfInterest.append(code)
     def parse(self,areaOfInterest = "top",postLimit = 100):
         self.posts = []
+        self.scale = postLimit
         for sub in self.subsOfInterest:
             if areaOfInterest == "top":
                 self.posts.append(app.subreddit(sub).top(limit=postLimit))
@@ -45,7 +47,7 @@ class redditSearcher():
                         else:
                             self.wordIndex[word]=1
         for code in self.wordIndex:
-            if self.wordIndex[code]>8:
+            if self.wordIndex[code]>self.scale*0.1:
                 self.stock.addStock(code)
         print("doneHere")
     def printCodes(self):
@@ -54,18 +56,14 @@ class redditSearcher():
             print(word,codeData[word]['open'])
     def getCodes(self):
         return self.stock.GetCodes()
-searcher = redditSearcher()
-searcher.addSub("wallstreetbets")
-searcher.parse(areaOfInterest = "new",postLimit = 200)
-searcher.findPopularCodes()
-searcher.printCodes()
+
 
         
 
 
 
 
-
+#test
 #WSB = app.subreddit('Wallstreetbets')
 #dict = {"$":5}
 #desiredCodes = ["GME","AMC","NOK"]

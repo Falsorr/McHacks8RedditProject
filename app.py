@@ -4,6 +4,7 @@
 
 import praw
 import tkinter as tk
+from redditParser import *
 
 HEIGHT = 800
 WIDTH = 800
@@ -79,14 +80,34 @@ def search_reddit(stock_code, type_of_search):
     display_text.configure(state = 'disabled')
 
 def search_popular_codes() :
-    display_text.configure(state = 'normal')
-    display_text.delete(1.0, 'end-1c')
     
-    display_text.insert(1.0, 'test')
+    #Checking if the limitor is valid
+    if limit_entry.get().isdigit() == True :
+        limitor = int(limit_entry.get())
+    else :
+        limitor = 200
+        
+    display_text.configure(state = 'normal')
+    
+    #Parsing reddit
+    searcher = redditSearcher()
+    searcher.addSub("wallstreetbets")
+    searcher.addSub('smallstreetbets')
+    searcher.addSub('stocks')
+    searcher.addSub('investing')
+    searcher.parse(areaOfInterest = "new",postLimit = limitor)
+    searcher.findPopularCodes()
+    
+    #creating the string to display
+    dict_stock_code = searcher.getCodes()
+    display = 'Here are the current popular stock codes:\n\n'
+    for code in dict_stock_code :
+        display += f'{dict_stock_code[code]["longName"]} ({code}) for a price of ${dict_stock_code[code]["open"]}\n'
+    
+    #Displaying the result
+    display_text.delete(1.0, 'end-1c')
+    display_text.insert(1.0, display)
     display_text.configure(state = 'disabled')
-
-
-
 
 """GUI"""
 
@@ -123,15 +144,15 @@ hot_button.place(rely = 0.41, relx = 0.62, relwidth = 0.2, relheight = 0.25, anc
 limit_label = tk.Label(frame1, text = 'How many posts to look for?')
 limit_label.place(rely = 1, relx = 0, relwidth = 0.25, relheight = 0.1, anchor ='sw')
 
-limit_entry = tk.Entry(frame1, justify = 'left')
+default_limit = tk.StringVar() 
+default_limit.set("100") 
+
+limit_entry = tk.Entry(frame1, justify = 'left', textvariable = default_limit)
 limit_entry.place(rely = 1, relx = 0.25, relwidth = 0.1, relheight = 0.1, anchor = 'sw')
 
 #Button to retrieve the popular stock codes amongst the four subreddits that we look at
 popular_codes_button = tk.Button(frame1, text = 'Find popular stock codes', command = lambda: search_popular_codes())
 popular_codes_button.place(rely=1, relx = 0.8, relwidth = 0.2, relheight = 0.2, anchor = 'sw')
-
-
-
 
 
 #Display frame : The frame where all the info is displayed, it is basically a giant label to write on it
@@ -140,8 +161,13 @@ display_frame.place(relx = 0.05, rely = 0.3, relwidth = 0.9, relheight = 0.6, an
 
 text_font = ('Helvetica', 12, 'normal') 
 
-display_text = tk.Text(display_frame, state = 'disabled', font = text_font)
+display_text = tk.Text(display_frame, font = text_font)
 display_text.place(relx = 0.01, rely = 0.01, relwidth = 0.98, relheight = 0.98, anchor = 'nw')
+display_text.insert(1.0, "The program parses a lot of data when you use with either a high number of posts to look for\nor when you click on the 'Find popular stock codes' button, be aware of that")
+display_text.configure(state = 'disabled')
+    
 
 root.mainloop()
+
+
 
