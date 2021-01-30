@@ -12,8 +12,20 @@ WIDTH = 800
 app = praw.Reddit(client_id = 'FUzb37XqgvY_Kw', client_secret = 'mRsuht9Cb_LPJSQu9O_MwNEuB18cOw', \
                   user_agent = 'McHacks8RedditProject', username = 'IPissedMyBed404', password = 'HePissedTheBed404')
 
-wsb = app.subreddit('Wallstreetbets')
-    
+
+#The subbredit used 
+WSB = app.subreddit('Wallstreetbets')
+
+ALL_SUBS = (WSB, )
+
+
+
+def search_reddit(stock_code, type_of_search):
+    """The search function : depending on the type_of_search it will do a search related to the code provided,
+    then order by upvotes if type_of_search is 'top', order by date if type_of_search is 'new' or order by comments if type_of_search is 'hot'
+    """
+    print('test')
+
 
 #Creating the UI
 root = tk.Tk()
