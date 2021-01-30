@@ -50,7 +50,7 @@ def search_reddit(stock_code, type_of_search):
             for post in submissions:
                 #we want to know how many posts relate to the stock code given
                 if stock_code.upper() in post.title:
-                    results += f'Upvotes: {post.score}\n{post.url}\n\n'
+                    results += f'{post.title}\nUpvotes: {post.score}\n{post.url}\n\n'
                     relevant_post.append(post)
                 total_post.append(post)
                 
@@ -60,7 +60,7 @@ def search_reddit(stock_code, type_of_search):
             submissions = sub.new(limit = limitor // 4)
             for post in submissions:
                 if stock_code.upper() in post.title:
-                    results += f'Upvotes: {post.score}\n{post.url}\n\n'
+                    results += f'{post.title}\nUpvotes: {post.score}\n{post.url}\n\n'
                     relevant_post.append(post)
                 total_post.append(post)
     
@@ -70,7 +70,7 @@ def search_reddit(stock_code, type_of_search):
             submissions = sub.hot(limit = limitor // 4)
             for post in submissions:
                 if stock_code.upper() in post.title:
-                    results += f'Upvotes: {post.score}\n{post.url}\n\n'
+                    results += f'{post.title}\nUpvotes: {post.score}\n{post.url}\n\n'
                     relevant_post.append(post)
                 total_post.append(post)
 
@@ -138,7 +138,9 @@ popular_codes_button.place(rely=1, relx = 0.8, relwidth = 0.2, relheight = 0.2, 
 display_frame = tk.Frame(canvas, bg = '#FF4500')
 display_frame.place(relx = 0.05, rely = 0.3, relwidth = 0.9, relheight = 0.6, anchor = 'nw')
 
-display_text = tk.Text(display_frame, state = 'disabled')
+text_font = ('Helvetica', 12, 'normal') 
+
+display_text = tk.Text(display_frame, state = 'disabled', font = text_font)
 display_text.place(relx = 0.01, rely = 0.01, relwidth = 0.98, relheight = 0.98, anchor = 'nw')
 
 root.mainloop()
