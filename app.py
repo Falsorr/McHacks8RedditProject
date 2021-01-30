@@ -142,3 +142,4 @@ display_text = tk.Text(display_frame, state = 'disabled')
 display_text.place(relx = 0.01, rely = 0.01, relwidth = 0.98, relheight = 0.98, anchor = 'nw')
 
 root.mainloop()
+
