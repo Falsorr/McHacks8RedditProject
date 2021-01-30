@@ -70,3 +70,4 @@ class redditSearcher():
 #results = WSB.search("$GME",sort="new",time_filter="day")
 #for t in results:
 #    print(t.title)
+
