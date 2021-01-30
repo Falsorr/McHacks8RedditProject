@@ -56,11 +56,7 @@ class redditSearcher():
             print(word,codeData[word]['open'])
     def getCodes(self):
         return self.stock.GetCodes()
-searcher = redditSearcher()
-searcher.addSub("wallstreetbets")
-searcher.parse(areaOfInterest = "new",postLimit = 200)
-searcher.findPopularCodes()
-searcher.printCodes()
+
 
         
 
@@ -74,3 +70,4 @@ searcher.printCodes()
 #results = WSB.search("$GME",sort="new",time_filter="day")
 #for t in results:
 #    print(t.title)
+
