@@ -102,7 +102,7 @@ def search_popular_codes() :
     dict_stock_code = searcher.getCodes()
     display = 'Here are the current popular stock codes:\n\n'
     for code in dict_stock_code :
-        display += f'{dict_stock_code[code]["longName"]} ({code}) for a price of ${dict_stock_code[code]["open"]}\n'
+        display += f'{dict_stock_code[code]["longName"]} ({code}) for a price of ${dict_stock_code[code]["open"]}\n\n'
     
     #Displaying the result
     display_text.delete(1.0, 'end-1c')
