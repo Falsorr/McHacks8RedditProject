@@ -5,6 +5,7 @@
 import praw
 import tkinter as tk
 from redditParser import *
+import random
 
 HEIGHT = 800
 WIDTH = 800
@@ -108,6 +109,31 @@ def search_popular_codes() :
     display_text.delete(1.0, 'end-1c')
     display_text.insert(1.0, display)
     display_text.configure(state = 'disabled')
+    
+def search_random_post(stock_code) :
+    display_text.configure(state = 'normal')
+    display_text.delete(1.0, 'end-1c')
+    display = ''
+    list_of_posts = []
+    
+    #We get a list of the posts from the subs that we want to parse through
+    for sub in ALL_SUBS :
+        submissions = sub.search(stock_code, limit = 10)
+        for post in submissions :
+            list_of_posts.append(post)
+    #We chose a random post in the list to be displayed 
+    random_post = random.choices(list_of_posts)[0]
+    
+    #We display
+    display += f'Post by {random_post.author.name}\nUpvotes: {random_post.score}\nTitle: {random_post.title}' \
+               f'\nOn the subreddit: r/{random_post.subreddit}\n' \
+               f'Want to see the full content? Here\'s the link:\n{random_post.url}'
+    
+    display_text.insert(1.0, display)
+    display_text.configure(state = 'disabled')
+    
+        
+    
 
 """GUI"""
 
@@ -138,6 +164,10 @@ new_button.place(rely = 0.41, relx = 0.40, relwidth = 0.2, relheight = 0.25, anc
 #Search by results with most comments
 hot_button = tk.Button(frame1, text = 'Search by hot', command = lambda: search_reddit(search_bar.get(), 'hot'))
 hot_button.place(rely = 0.41, relx = 0.62, relwidth = 0.2, relheight = 0.25, anchor = 'nw')
+
+#Search and display a random posts about the given stock code
+random_button = tk.Button(frame1, text = 'Random post', command = lambda: search_random_post(search_bar.get()))
+random_button.place(rely = 0.67, relx = 0.40, relwidth = 0.2, relheight = 0.25, anchor = 'nw')
 
 
 #Post check limit
