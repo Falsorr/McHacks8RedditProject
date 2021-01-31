@@ -103,7 +103,7 @@ def search_popular_codes() :
     dict_stock_code = searcher.getCodes()
     display = 'Here are the current popular stock codes:\n\n'
     for code in dict_stock_code :
-        display += f'{dict_stock_code[code]["longName"]} ({code}) for a price of ${dict_stock_code[code]["open"]}\n\n'
+        display += f'{dict_stock_code[code]["longName"]} ({code}) for an open price of ${dict_stock_code[code]["open"]}\n\n'
     
     #Displaying the result
     display_text.delete(1.0, 'end-1c')
@@ -139,7 +139,7 @@ def search_random_post(stock_code) :
 
 #Creating the UI
 root = tk.Tk()
-root.title('Search Reddit Program')
+root.title('MemeStock Finder')
 canvas = tk.Canvas(root, height = HEIGHT, width = WIDTH)
 canvas.pack()
 
@@ -193,11 +193,8 @@ text_font = ('Helvetica', 12, 'normal')
 
 display_text = tk.Text(display_frame, font = text_font)
 display_text.place(relx = 0.01, rely = 0.01, relwidth = 0.98, relheight = 0.98, anchor = 'nw')
-display_text.insert(1.0, "The program parses a lot of data when you use with either a high number of posts to look for\nor when you click on the 'Find popular stock codes' button, be aware of that")
+display_text.insert(1.0, "The program parses a lot of data when you use it with either a high number of posts to look for\nor when you click on the 'Find popular stock codes' button, be aware of that")
 display_text.configure(state = 'disabled')
     
 
 root.mainloop()
-
-
-
